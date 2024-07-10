@@ -89,9 +89,9 @@ def add_favorite_planet(planet_id):
     new_favorite = Favorite(user_id=user_id, planet_id=planet_id)
     db.session.add(new_favorite)
     db.session.commit()
-    return jsonify(new_favorite.serialize()), 200
+    return jsonify(new_favorite.serialize()), 201
 
-@app.route('/favorite/character/<int:planet_id>', methods=['POST'])
+@app.route('/favorite/character/<int:character_id>', methods=['POST'])
 def add_favorite_character(character_id):
     user_id = request.json.get('user_id')
     user = User.query.get(user_id)

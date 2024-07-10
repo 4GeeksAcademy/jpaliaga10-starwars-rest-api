@@ -1,4 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
 
 db = SQLAlchemy()
 
@@ -10,7 +11,7 @@ class User(db.Model):
     password = db.Column(db.String(60), nullable=False)
     firstname = db.Column(db.String(30), nullable=False)
     lastname = db.Column(db.String(30), nullable=False)
-    datejoined = db.Column(db.DateTime, nullable=False)
+    datejoined = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     favorites = db.relationship('Favorite', backref='user', lazy=True)
 
     def __repr__(self):
@@ -34,7 +35,7 @@ class Species(db.Model):
     characters = db.relationship('Character', backref='species', lazy=True)
 
     def __repr__(self):
-        return'<Species %r>' %self.id
+        return '<Species %r>' % self.id
 
     def serialize(self):
         return {
@@ -54,7 +55,7 @@ class Character(db.Model):
     favorites = db.relationship('Favorite', backref='character', lazy=True)
 
     def __repr__(self):
-        return'<Character %r>' %self.id
+        return '<Character %r>' % self.id
 
     def serialize(self):
         return {
@@ -75,7 +76,7 @@ class Planet(db.Model):
     favorites = db.relationship('Favorite', backref='planet', lazy=True)
 
     def __repr__(self):
-        return'<Planet %r>' %self.id
+        return '<Planet %r>' % self.id
 
     def serialize(self):
         return {
@@ -94,7 +95,7 @@ class Favorite(db.Model):
     planet_id = db.Column(db.Integer, db.ForeignKey('planet.id'), nullable=True)
 
     def __repr__(self):
-        return'<Favorite %r>' %self.id
+        return '<Favorite %r>' % self.id
 
     def serialize(self):
         return {
